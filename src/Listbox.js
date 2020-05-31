@@ -227,7 +227,15 @@ export const ListboxOption = {
 }
 
 export const Listbox = {
-  props: ['value'],
+  props: {
+    value: {
+      required: true
+    },
+    closeOnSelect: {
+      type: Boolean,
+      default: true,
+    }
+  },
   data: (vm) => ({
     typeahead: { value: '' },
     listboxButtonRef: { value: null },
@@ -326,7 +334,9 @@ export const Listbox = {
     select(value) {
       this.$emit('input', value)
       this.$nextTick(() => {
-        this.close()
+        if (this.closeOnSelect) {
+          this.close()
+        }
       })
     },
     focus(value) {
